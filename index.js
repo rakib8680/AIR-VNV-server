@@ -45,6 +45,15 @@ async function run() {
       }
       const result = await usersCollection.updateOne(query, updateDoc, options)
       res.send(result)
+    });
+
+
+
+    // save a room details in data base 
+    app.post('/rooms', async (req, res) => {
+      const room = req.body;
+      const result = await roomsCollection.insertOne(room);
+      res.send(result); 
     })
 
 
