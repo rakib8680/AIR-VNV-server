@@ -52,7 +52,7 @@ async function run() {
     // get user 
     app.get('/users/:email', async (req, res) => {
       const email = req.params.email
-      const query = { email : email };
+      const query = { email: email };
       const result = await usersCollection.findOne(query)
       res.send(result)
     });
@@ -66,6 +66,24 @@ async function run() {
       const result = await roomsCollection.insertOne(room);
       res.send(result);
     });
+
+
+
+    // update room booking status 
+     app.patch('/rooms/status/:id', async (req, res) => {
+      const id = req.params.id
+      const status = req.body.status
+      const query = { _id: new ObjectId(id) }
+      const updateDoc = {
+        $set: {
+          booked: status,
+        },
+      }
+      const update = await roomsCollection.updateOne(query, updateDoc)
+      res.send(update)
+    })
+
+
 
 
     // get all rooms 
