@@ -53,7 +53,22 @@ async function run() {
     app.post('/rooms', async (req, res) => {
       const room = req.body;
       const result = await roomsCollection.insertOne(room);
-      res.send(result); 
+      res.send(result);
+    });
+
+
+    // get all rooms 
+    app.get('/rooms', async (req, res,) => {
+      const result = await roomsCollection.find().toArray();
+      res.send(result);
+    });
+
+    // get single rooms 
+    app.get('/room/:id', async (req, res) => {
+      const id = req.params.id
+      const query = { _id: new ObjectId(id) }
+      const result = await roomsCollection.findOne(query)
+      res.send(result)
     })
 
 
