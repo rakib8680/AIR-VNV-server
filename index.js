@@ -49,6 +49,17 @@ async function run() {
 
 
 
+    // get user 
+    app.get('/users/:email', async (req, res) => {
+      const email = req.params.email
+      const query = { email : email };
+      const result = await usersCollection.findOne(query)
+      res.send(result)
+    });
+
+
+
+
     // save a room details in data base 
     app.post('/rooms', async (req, res) => {
       const room = req.body;
@@ -69,12 +80,17 @@ async function run() {
       const query = { _id: new ObjectId(id) }
       const result = await roomsCollection.findOne(query)
       res.send(result)
-    })
+    });
 
 
 
 
-
+    // save booking in data base 
+    app.post('/bookings', async (req, res) => {
+      const booking = req.body;
+      const result = await bookingsCollection.insertOne(booking);
+      res.send(result);
+    });
 
 
 
